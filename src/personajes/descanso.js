@@ -9,7 +9,9 @@ Fighter.prototype.foeNear5 = function () {
   return false;
 };
 Fighter.prototype.idleVariant = function (P) {
-  const t = this.idleT, k = (this.idx + (this.team > 0 ? 2 : 0) + (this.name ? this.name.length : 0)) % 4;
+  // variantes: 0 manos en la cintura, 2 brazos sueltos, 3 manos en los bolsillos. (La de brazos cruzados se sacó:
+  // en el cuerpo de Mixamo las manos quedaban a la altura del pecho y parecía guardia.) El jugador, siempre sueltos.
+  const t = this.idleT, k = this.isPlayer ? 2 : [0, 2, 3][(this.idx + (this.team > 0 ? 2 : 0) + (this.name ? this.name.length : 0)) % 3];
   const br = Math.sin(t * 1.9), shift = Math.sin(t * 0.35 + this.idx * 1.7);   // respiración y cambio de peso (lento)
   P.tX = 0.03 + br * 0.018; P.tZ = shift * 0.035; P.hY = Math.sin(t * 0.42 + this.idx) * 0.45; P.hX = -0.04 + Math.sin(t * 0.3) * 0.04;
   if (shift > 0.3) { P.kL = 0.22; P.kR = 0.04; } else if (shift < -0.3) { P.kR = 0.22; P.kL = 0.04; } else { P.kL = P.kR = 0.08; }
@@ -20,5 +22,5 @@ Fighter.prototype.idleVariant = function (P) {
   if (this.weapon) { P.aR = -0.25; P.eR = -1.1; P.aRz = 0.05; }                                 // con un fierro en la mano, lo sostiene
   // de vez en cuando se rasca la cabeza o mira el celular
   const c = (t + this.idx * 3.1) % 11;
-  if (c > 9.6 && k !== 1) { const u = Math.sin((c - 9.6) / 1.4 * Math.PI); P.aR = -2.4 * u; P.eR = -2.0 * u; P.aRz = 0.1; }
+  if (c > 9.6 && !this.isPlayer) { const u = Math.sin((c - 9.6) / 1.4 * Math.PI); P.aR = -2.4 * u; P.eR = -2.0 * u; P.aRz = 0.1; }
 };
