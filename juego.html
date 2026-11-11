@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<link rel="icon" href="data:,">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guerra de Vecinos v46 · Personajes nuevos</title>
+<link rel="stylesheet" href="css/interfaz_1.css">
+</head>
+<body>
+<div id="game"></div>
+<div id="loading">CARGANDO EL BARRIO...</div>
+<div id="labels"></div><div id="pops"></div>
+<div id="cine"></div><div id="caption"></div>
+<button id="skip" class="hidden">SALTAR ▶ [ENTER]</button>
+<div id="banner"></div>
+
+<div id="hud" class="hidden">
+  <div id="pcard">
+    <div id="pname">RUBÉN <span>VEREDA PAR</span></div>
+    <div class="bar"><div id="php" style="width:100%"></div></div>
+    <div class="barLbl">FURIA</div>
+    <div class="bar rage"><div id="prage" style="width:0%"></div></div>
+    <div id="pweapon">ARMA: <b>A las piñas</b></div>
+  </div>
+  <div id="scoreboard">
+    <div class="team blue">VEREDA PAR<div class="pips" id="bluePips"></div></div>
+    <div id="score">0 - 0</div>
+    <div class="team red">VEREDA IMPAR<div class="pips" id="redPips"></div></div>
+    <div id="roundLbl">ROUND 1</div>
+  </div>
+  <div id="p2card" class="hidden">
+    <div id="p2name">EL TANO <span>J2</span></div>
+    <div class="bar"><div id="p2hp" style="width:100%"></div></div>
+    <div class="barLbl">FURIA</div>
+    <div class="bar rage"><div id="p2rage" style="width:0%"></div></div>
+    <div id="p2weapon">ARMA: <b>A las piñas</b></div>
+  </div>
+  <div id="cmdBox">BANDA: <b id="cmdState">¡A ELLOS!</b> <span style="opacity:.7">[Q]</span></div>
+  <div id="grabHint"></div>
+  <div id="rageHint">¡FURIA LISTA! APRETÁ [R]</div>
+  <div id="koMsg">ESTÁS K.O. — TU BANDA SIGUE PELEANDO</div>
+  <div id="hint"><b>WASD</b> mover · <b>Shift</b> correr · <b>J</b> piña · <b>K</b> patada · <b>Shift+K</b> voladora · <b>L</b> agarrar rival · <b>Espacio</b> cubrirse · <b>E</b> levantar · <b>F</b> tirar · <b>R</b> furia · <b>Q</b> orden · <b>P</b> pausa</div>
+</div>
+
+<div id="menu">
+  <div class="pre">CONURBANO · BARRIO LAS ACACIAS</div>
+  <h1>GUERRA<br>DE VECINOS</h1>
+  <h2><span class="b">VEREDA PAR</span> vs. <span class="r">VEREDA IMPAR</span></h2>
+  <div class="tagline">Se cortó la luz en todo el barrio. La Par se junta en lo de Rubén para elegir con qué salir, la Impar sale de lo del Tano... y se encuentran en la plaza. Doña Chola ya está asomada.</div>
+  <div class="row modeRow">
+    <button class="modeBtn sel" data-mode="1">1 JUGADOR</button>
+    <button class="modeBtn" data-mode="2">2 JUGADORES</button>
+  </div>
+  <div class="row">
+    <button class="sizeBtn" data-size="3">3 vs 3</button>
+    <button class="sizeBtn sel" data-size="4">4 vs 4</button>
+  </div>
+  <button id="startBtn">¡A LO DE RUBÉN!</button>
+  <div class="controls" id="ctl1p">
+    <div><b>WASD</b>Moverse</div><div><b>Shift</b>Correr</div><div><b>J</b>Piña (combo x3)</div>
+    <div><b>K</b>Patada</div><div><b>Shift+K</b>Patada voladora</div><div><b>L</b>Agarrar al rival</div>
+    <div><b>L → J</b>Rodillazo (x3 lo tira)</div><div><b>L → K</b>Revoleo</div><div><b>Espacio</b>Cubrirse</div>
+    <div><b>E</b>Levantar / soltar</div><div><b>F</b>Tirar objeto</div><div><b>R</b>Furia</div>
+    <div><b>J/K</b>Pisotón al caído</div><div><b>Q</b>Orden a la banda</div><div><b>🎮</b>Joystick: X piña · Y patada · B agarrar · A levantar · RB cubrirse · RT correr</div>
+  </div>
+  <div class="controls hidden" id="ctl2p">
+    <div><b>J1</b>WASD · Shift correr</div><div><b>J1</b>J piña · K patada · L agarrar</div><div><b>J1</b>Espacio cubrir · E levantar · F tirar · R furia</div>
+    <div><b>J2</b>Flechas · Shift der. correr</div><div><b>J2</b>Num1 piña · Num2 patada · Num3 agarrar</div><div><b>J2</b>Num0 cubrir · Num4 levantar · Num5 tirar · Num6 furia</div>
+    <div><b>J2 sin numérico</b>, piña · . patada · - agarrar</div><div><b>🎮</b>Con 2 joysticks: uno cada uno</div><div><b>🎮</b>Con 1 joystick: lo usa J2</div>
+  </div>
+</div>
+
+<div id="prep" class="hidden">
+  <div id="prepTop"><div class="t1">LO DE RUBÉN</div><div class="t2">Pasaje 14 Nº 742 · Atardecer · La banda se prepara</div></div>
+  <div id="prepTitle">ELEGÍ TU FIERRO</div>
+  <div id="cards"></div>
+  <button id="goBtn" disabled>¡VAMOS A LA PLAZA!</button>
+</div>
+<div id="pause" class="hidden"><h1>PAUSA</h1><button id="resumeBtn">SEGUIR</button></div>
+<div id="endScreen" class="hidden">
+  <h1 id="endTitle">FIN</h1>
+  <div id="endSub"></div>
+  <div class="row"><button id="againBtn">REVANCHA</button></div>
+  <div class="row"><button id="menuBtn">MENÚ</button></div>
+</div>
+
+<script src="js/motor_bibliotecas.js"></script>
+<script src="js/datos_personajes.js"></script>
+<script src="js/datos_personajes_nuevos.js"></script>
+<script src="js/cargar_proyecto.js"></script>
+</body>
+</html>

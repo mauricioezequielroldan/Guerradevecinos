@@ -1,0 +1,132 @@
+{
+  "base": "v36 adjunta",
+  "base_sha256": "33a68f1faa72be9954e1f6e8ae07ce0af47a51d0027b9d4d284acb68e352fd8c",
+  "borrador_sha256": "f8a7b5d7fd0d8521a6977d486127200895629a4db66782b1372faf2a0e6608fe",
+  "parts": [
+    {
+      "path": "src/nucleo/01_motor_mundo_casa_plaza.js",
+      "sha256": "c4905cbe2ced1e758754585b5c589887592be793cbe52b5f0ca7748a0e460d9b"
+    },
+    {
+      "path": "src/nucleo/02_armas_efectos_audio.js",
+      "sha256": "91a4236c7f19a6cf058f90d27a58a18babc06937edbc936da7e4e1042c105821"
+    },
+    {
+      "path": "src/nucleo/03_personajes_cuerpo.js",
+      "sha256": "7dac728dce006d41e9d02624b52ecd9c402c4bc223c1000c236262a9a04ec4f4"
+    },
+    {
+      "path": "src/nucleo/04_animacion_ik_toque_humano.js",
+      "sha256": "fc7002733f7c4436f90c8a0e0dd63ab7efcd033dc9acf8708c8c07dfdbb9d28b"
+    },
+    {
+      "path": "src/nucleo/05_bandas_y_arsenal.js",
+      "sha256": "b2400c20c6675b5ac646cfaa2394e3260687e1fd798958995cdeb36733a96b92"
+    },
+    {
+      "path": "src/nucleo/06_capturas_mixamo.js",
+      "sha256": "960dc0d4e86c72ef63b8ca8b2872d4ca8ba2865db490aaa267feeb639b593f4d"
+    },
+    {
+      "path": "src/nucleo/07_combate_y_vida_del_barrio.js",
+      "sha256": "59e87f4c99c394b7416580d988d42e608acef1d6315d520823487e8faf5387f2"
+    },
+    {
+      "path": "src/nucleo/08_barrio_pesado_furia_escenario.js",
+      "sha256": "be556d41e2e6a5b886c880b6ac8c21b4236bec05ece40989374a19808c2d3e57"
+    },
+    {
+      "path": "src/audio_y_presentaciones.js",
+      "sha256": "c3fc160a1eed39f6122cf319db2da90c1230a8fdc845259827d5de5cdcf2a676"
+    },
+    {
+      "path": "src/plaza_y_partidas.js",
+      "sha256": "32296c45d3951ef1ab099232195597017ea74d5b343314a39576490cebccb18c"
+    },
+    {
+      "path": "src/personajes_y_animaciones.js",
+      "sha256": "be6a7edf8e38ab2c906ddb9a62a441e6d5ed9409652c2e0e61043c96d770c723"
+    },
+    {
+      "path": "src/plaza_detalles.js",
+      "sha256": "ea9fa954a123a9159e6cee8510041daeb2b2b64ccd76d93c3cfcc85ab8d0d12e"
+    },
+    {
+      "path": "src/ropa_y_sistemas.js",
+      "sha256": "89e7707a8421e40fc4a8f2a292eca4a02bf5b9916b8279a7774474a33496609d"
+    },
+    {
+      "path": "src/camara_y_presentaciones.js",
+      "sha256": "89decf7ace2e80ff1f3b0b7aee795969f46376e02df11c61ad6c975bf0183261"
+    },
+    {
+      "path": "src/mapas/trofi_base.js",
+      "sha256": "3b0309db254373551459d1975e92bdf210e17d83c7c627d4d27fc4052cc42e45"
+    },
+    {
+      "path": "src/mapas/trofi_vehiculos.js",
+      "sha256": "3908432039a8b3e7d210ea4ddaf346d9d80a576196b853f9bd5d4cb52a0b5d2b"
+    },
+    {
+      "path": "src/mapas/trofi_eventos_audio_entrada.js",
+      "sha256": "7aea1aad3e4bf23333ed100dd9bce08f18704006aedc89cc6bb9520d5fbf4042"
+    },
+    {
+      "path": "src/mapas/trofi_publico.js",
+      "sha256": "0e02e58e879af1df0a0a875a16c1fe8f88ffb69703c03ee28d17dd3cb7ec97f4"
+    },
+    {
+      "path": "src/personajes/cuerpos_nuevos.js",
+      "sha256": "0d91f8818402cf69db150c202f16d823f619b0433d4b7878fa76eb3aee553282"
+    },
+    {
+      "path": "src/personajes/descanso.js",
+      "sha256": "dfd025f23ab96ff72edd374384653538d622e633f0e9ca678d8f119e7e70b732"
+    },
+    {
+      "path": "src/mapas/calle_barrio.js",
+      "sha256": "7fc7bca6778e5210da8e2df7dc69c904d8b0cc48316af9dc839643cb1e40bdf3"
+    },
+    {
+      "path": "src/mapas/calle_vida.js",
+      "sha256": "4c88c3c6d4fbc0667bcbaf66bc158eb3f4eed65e3f809fcb5b5e8cb804cde80b"
+    },
+    {
+      "path": "src/mapas/modelos_hd.js",
+      "sha256": "23e44bda5fb97f9beda92ad56995b8325dc90ab2f53a3a27b8039421409d6b75"
+    },
+    {
+      "path": "src/mapas/vida_mixamo.js",
+      "sha256": "a26da028ee1166b5ac16da28f0e48e08f20ad0bf37eb837b15fa1a4889644271"
+    },
+    {
+      "path": "src/historia/historia_datos.js",
+      "sha256": "ec85b88d0fd07933032fd2f71e80b01bc5f9477eb882cb711442fed4fc3da848"
+    },
+    {
+      "path": "src/historia/historia_barrio.js",
+      "sha256": "46a7f94ba141d5ff3254089ef354d5bea3cd1b3957c9088c54b75b36646e6cd8"
+    },
+    {
+      "path": "src/menu_y_arranque.js",
+      "sha256": "a94e93e3aed92dfbd5b06ec258e1b4f405f32a437ce553a5ad07c99436d26801"
+    }
+  ],
+  "nota_v40": "nucleo_combate.js partido en src/nucleo/ (8 partes); unidas dan exactamente el mismo código",
+  "nota_v41": "modo historia en src/historia/ (datos + barrio); una línea en src/nucleo/03_personajes_cuerpo.js para poder caminar en el barrio",
+  "nota_v42": "descanso fuera de la pelea (src/personajes/descanso.js + 1 línea en nucleo/03); calle del barrio para el modo historia (src/mapas/calle_barrio.js)",
+  "nota_v43": "calle estilo Caminito con Obelisco y vida argentina (src/mapas/calle_vida.js)",
+  "nota_v44": "modelos mejorados desde fotos (src/mapas/modelos_hd.js): Amaroki, el 128, moto enduro, teléfono con capucha, Bar El Gomero",
+  "nota_v45": "gente de la calle con cuerpos de Mixamo (src/mapas/vida_mixamo.js); Amaroki más redondeada; bar con menos brillo",
+  "datos_personajes_nuevos": {
+    "path": "js/datos_personajes_nuevos.js",
+    "sha256": "d6c0a33bef2f686bc46ed0d6d8565e5a21589ecd4f6289154c0fd7c5e110a17a",
+    "cuerpos": [
+      "ch21",
+      "ch08",
+      "ch38",
+      "ch20"
+    ]
+  },
+  "nota_v46": "4 cuerpos nuevos de Mixamo; reparto por banda en src/personajes/cuerpos_nuevos.js; 1 línea en src/personajes_y_animaciones.js (chpCache)"
+}
