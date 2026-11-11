@@ -109,7 +109,7 @@ function histEnterHub() {
   if (HIST.ui.back) HIST.ui.back.classList.add('hidden');
   teamSel = ['original', 'original']; applyTeams();
   // Rubén
-  const [sx, sz] = histFree(-33, 0);
+  const [sx, sz] = (typeof BA !== 'undefined' && BA.ruben) ? [BA.ruben.x, BA.ruben.z] : histFree(-33, 0);   // arranca en la puerta de su casa
   const rub = new Fighter(0, 0, ROSTER_ORIG[0][0], 1); rub.pos.set(sx, 0, sz); rub.facing = Math.PI / 2; rub.root.position.copy(rub.pos);
   fighters.push(rub); player = rub; if (rub.label) rub.label.style.display = 'none';   // en el barrio no hace falta su cartel
   // compañeros, cada uno en su lugar con una luz en el piso
@@ -213,3 +213,44 @@ window.GV_HIST = { HIST, testWin: () => { score[0] = 2; score[1] = 0; endMatch()
     camera.position.copy(hcPos); camera.lookAt(hcLook);
   };
 }
+// entrar directo al modo historia desde la página de inicio (juego.html?historia=1): espera a que carguen el juego y los personajes
+if (params.get('historia')) { const wait = setInterval(() => { if (window.GV_CH01 && loadingEl.style.display === 'none') { clearInterval(wait); const b = document.getElementById('histBtn'); if (b) b.click(); } }, 300); }
+// ============================================================
+// v50: CONTROLES DEL BARRIO RELATIVOS A LA CÁMARA
+// El juego mueve con W = norte del mapa (sirve en la pelea, con la cámara fija). En el barrio la cámara va detrás de
+// Rubén, así que W/A/S/D se traducen a la dirección de la cámara: W siempre es "adelante en la pantalla".
+// La cámara no gira sola: se gira con [ y ] o arrastrando el mouse.
+// ============================================================
+HIST.camYaw = Math.PI / 2;   // mirando hacia +x (el Obelisco)
+{
+  const baseHC = humanControl;
+  humanControl = function (p, c) {
+    if (gameState === 'historia' && HIST.on && c && (c.mx || c.mz)) {
+      const y = HIST.camYawS !== undefined ? HIST.camYawS : HIST.camYaw, fx = Math.sin(y), fz = Math.cos(y);
+      const fwd = -c.mz, right = c.mx;                       // W da mz = -1 → adelante
+      const wx = fx * fwd - fz * right, wz = fz * fwd + fx * right;   // derecha de la cámara = (-cos y, sin y)
+      c = Object.assign({}, c, { mx: wx, mz: wz });
+    }
+    return baseHC(p, c);
+  };
+  // girar la cámara: [ y ] (de a 45°) o arrastrando el mouse
+  addEventListener('keydown', e => { if (gameState !== 'historia' || !HIST.on || HIST.talk) return; if (e.code === 'BracketLeft') HIST.camYaw += Math.PI / 4; if (e.code === 'BracketRight') HIST.camYaw -= Math.PI / 4; });
+  let drag = null;
+  addEventListener('pointerdown', e => { if (gameState === 'historia' && HIST.on) drag = e.clientX; });
+  addEventListener('pointerup', () => { drag = null; });
+  addEventListener('pointermove', e => { if (drag !== null && gameState === 'historia' && HIST.on) { HIST.camYaw -= (e.clientX - drag) * 0.006; drag = e.clientX; } });
+  // la cámara del barrio usa ese ángulo (suavizado), no la dirección en la que mira Rubén
+  const baseCam2 = updateCamera, cp = new THREE.Vector3(), cl = new THREE.Vector3(); let init2 = false;
+  updateCamera = function (dt) {
+    if (window.__camLock || gameState !== 'historia' || !player) { init2 = false; return baseCam2(dt); }
+    if (HIST.camYawS === undefined || !init2) HIST.camYawS = HIST.camYaw;
+    HIST.camYawS += (HIST.camYaw - HIST.camYawS) * (1 - Math.exp(-dt * 6));
+    const P = player, y = HIST.camYawS, fx = Math.sin(y), fz = Math.cos(y), back = 6.0, up = 3.4;
+    const want = new THREE.Vector3(P.pos.x - fx * back, up, P.pos.z - fz * back), look = new THREE.Vector3(P.pos.x + fx * 3, 1.4, P.pos.z + fz * 3);
+    if (!init2) { cp.copy(want); cl.copy(look); init2 = true; }
+    const k = 1 - Math.exp(-dt * 4); cp.lerp(want, k); cl.lerp(look, k);
+    camera.position.copy(cp); camera.lookAt(cl);
+  };
+}
+// al entrar al barrio, la cámara arranca mirando hacia el Obelisco
+{ const baseEnter = histEnterHub; histEnterHub = function () { HIST.camYaw = Math.PI / 2; HIST.camYawS = undefined; return baseEnter.apply(this, arguments); }; }
