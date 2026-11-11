@@ -23,7 +23,11 @@
   "src/mapas/calle_vida.js",
   "src/mapas/modelos_hd.js",
   "src/mapas/vida_mixamo.js",
+  "src/mapas/barrio_acacias.js",
+  "src/mapas/barrio_acacias_vida.js",
+  "src/mapas/barrio_mas_vida.js",
   "src/historia/historia_datos.js",
   "src/historia/historia_barrio.js",
+  "src/historia/barrio_historia.js",
   "src/menu_y_arranque.js"
 ]
