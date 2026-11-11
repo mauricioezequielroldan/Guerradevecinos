@@ -16,6 +16,7 @@ function vmxBody(cfg, idx, name) {
   const b = new Fighter(-1, idx, Object.assign({ name: name || 'Vecino', civil: false }, cfg), false);
   if (b.label) { b.label.classList.add('npc'); b.label.style.display = 'none'; }
   b.useIK = false; b.root.position.copy(b.pos);
+  if (b.ring) b.ring.visible = false;   // el anillo es para los luchadores, no para la gente del barrio
   return b;
 }
 // sentado en una silla: muslos horizontales, rodillas a 90°, cadera a la altura del asiento; cada tanto toma
