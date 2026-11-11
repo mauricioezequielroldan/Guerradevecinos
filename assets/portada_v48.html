@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Guerra de Vecinos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#05060a}html,body{min-height:100%;color:#f4efe0;font-family:'Segoe UI',Arial,sans-serif}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;overflow-x:hidden;
+  background:transparent}   /* transparente: si no, tapa el video de fondo */
+video.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;filter:saturate(1.15) contrast(1.05)}
+.shade{position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(5,6,10,.35),rgba(5,6,10,.82) 75%),linear-gradient(rgba(5,6,10,.55),rgba(5,6,10,.25) 40%,rgba(5,6,10,.85))}
+.scan{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.18;background:repeating-linear-gradient(0deg,rgba(0,0,0,.6) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+@keyframes golpe{0%{opacity:0;transform:skewX(-8deg) scale(1.6);filter:blur(12px)}60%{opacity:1;transform:skewX(-8deg) scale(.94);filter:blur(0)}80%{transform:skewX(-8deg) scale(1.03)}100%{transform:skewX(-8deg) scale(1)}}
+@keyframes neon{0%,18%,22%,62%,64%,100%{text-shadow:0 0 34px rgba(255,90,26,.6),0 0 80px rgba(255,90,26,.25),4px 4px 0 #3a0a00,8px 8px 0 #000;opacity:1}20%,63%{text-shadow:4px 4px 0 #3a0a00,8px 8px 0 #000;opacity:.82}}
+@keyframes sube{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes brillo{0%,100%{box-shadow:5px 5px 0 #000,0 0 0 rgba(255,90,26,0)}50%{box-shadow:5px 5px 0 #000,0 0 26px rgba(255,90,26,.55)}}
+h1{animation:golpe .9s cubic-bezier(.2,1.4,.4,1) both,neon 5s 1s infinite}
+.pre{animation:sube .6s .1s both}h2{animation:sube .6s .7s both}.tag{animation:sube .6s .9s both}
+.btns a:nth-child(1){animation:sube .5s 1.1s both,brillo 2.4s 2s infinite}.btns a:nth-child(2){animation:sube .5s 1.25s both}.btns a:nth-child(3){animation:sube .5s 1.4s both}
+.card{animation:sube .6s both;backdrop-filter:blur(3px)}.card:nth-child(1){animation-delay:1.6s}.card:nth-child(2){animation-delay:1.75s}.card:nth-child(3){animation-delay:1.9s}
+.note{animation:sube .6s 2.1s both}
+a.btn.hist:hover{background:#3a5ac0;box-shadow:7px 7px 0 #000,0 0 22px rgba(106,154,255,.6)}
+a.btn:not(.main):not(.hist):hover{box-shadow:7px 7px 0 #000,0 0 18px rgba(255,255,255,.25)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}video.bg{display:none}body{background:#05060a url(assets/fondo_inicio.jpg) center/cover fixed}}
+.pre{font:16px Impact,'Arial Black',sans-serif;letter-spacing:8px;opacity:.8;text-align:center}
+h1{font:clamp(54px,11vw,120px) Impact,'Arial Black',sans-serif;line-height:.9;letter-spacing:2px;text-align:center;color:#ff5a1a;transform:skewX(-8deg);margin-top:8px;
+  text-shadow:0 0 34px rgba(255,90,26,.5),4px 4px 0 #3a0a00,8px 8px 0 #000}
+h2{margin-top:16px;font:clamp(18px,2.6vw,26px) Impact,'Arial Black',sans-serif;letter-spacing:4px;text-shadow:2px 2px 0 #000;text-align:center}
+h2 .b{color:#6a9aff}h2 .r{color:#ff4a3a}
+.tag{max-width:640px;text-align:center;margin:14px 0 26px;line-height:1.45;opacity:.92;text-shadow:1px 1px 0 #000}
+.tag b{color:#e8d27a}
+.btns{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+a.btn{display:inline-block;text-decoration:none;font:24px Impact,'Arial Black',sans-serif;letter-spacing:2px;padding:14px 32px;border:3px solid #000;color:#e8e2d0;background:#1c1a22;box-shadow:5px 5px 0 #000;transform:skew(-8deg);transition:.1s}
+a.btn:hover{transform:skew(-8deg) translate(-2px,-2px);box-shadow:7px 7px 0 #000;background:#2c2834}
+a.btn.main{background:#c0300f;color:#fff;font-size:32px;padding:16px 46px}
+a.btn.main:hover{background:#e0461f}
+a.btn.hist{background:#2a4a9a;color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;width:100%;margin-top:38px}
+.card{background:rgba(8,8,12,.62);border:3px solid #000;box-shadow:5px 5px 0 #000;padding:14px 16px}
+.card h3{font:20px Impact,'Arial Black',sans-serif;letter-spacing:2px;color:#e8d27a;margin-bottom:8px}
+.card p,.card li{font-size:14px;line-height:1.45;opacity:.9}
+.card ul{list-style:none}.card li b{display:inline-block;min-width:22px;padding:0 6px;margin-right:6px;background:#e8d27a;color:#111;border-radius:2px;text-align:center;font-size:12px}
+.note{margin-top:28px;font-size:13px;opacity:.6;text-align:center;max-width:700px;line-height:1.5}
+</style>
+</head>
+<body>
+<video class="bg" autoplay muted loop playsinline preload="auto" poster="assets/fondo_inicio.jpg"><source src="assets/fondo_inicio.mp4" type="video/mp4"><source src="assets/fondo_inicio.webm" type="video/webm"></video>
+<div class="shade"></div><div class="scan"></div>
+<div class="pre">CONURBANO · BARRIO LAS ACACIAS</div>
+<h1>GUERRA<br>DE VECINOS</h1>
+<h2><span class="b">VEREDA PAR</span> vs. <span class="r">VEREDA IMPAR</span></h2>
+<p class="tag">Se cortó la luz en todo el barrio y alguien está metiendo púa entre las bandas. Elegí tu pelotón, agarrá lo que tengas a mano y salí a la calle. <b>La plaza es del que se la gana.</b></p>
+<div class="btns">
+  <a class="btn main" href="juego.html">▶ JUGAR</a>
+  <a class="btn hist" href="juego.html?historia=1">📖 MODO HISTORIA</a>
+  <a class="btn" href="juego.html?mapa=trofi">TROFI CAMBIO</a>
+</div>
+<div class="cards">
+  <div class="card"><h3>EL JUEGO</h3><p>Peleas de bandas en 3D al estilo de los clásicos de pandillas: 7 bandas (La Par, La Impar, Cumbieros, Motoqueros, Rugbier, Gauchos y Floggers), armas del barrio, furia, agarres y la policía que cae cuando se acaba el tiempo.</p></div>
+  <div class="card"><h3>MODO HISTORIA</h3><p>"Una noche sin luz": sos Rubén, capitán de La Par. Recorré la cuadra, hablá con tus compañeros y resolvé las misiones: la plaza contra La Impar y la salida del Trofi contra los Cumbieros.</p></div>
+  <div class="card"><h3>CONTROLES</h3><ul>
+    <li><b>WASD</b>moverse · <b>Shift</b>correr</li>
+    <li><b>J</b>piña · <b>K</b>patada · <b>L</b>agarrar</li>
+    <li><b>Espacio</b>cubrirse · <b>E</b>levantar / hablar</li>
+    <li><b>F</b>tirar · <b>R</b>furia · <b>P</b>pausa</li>
+  </ul></div>
+</div>
+<p class="note">La primera vez tarda unos segundos en cargar (los personajes pesan bastante). Personajes y movimientos de Mixamo (Adobe). Proyecto en desarrollo.</p>
+</body>
+</html>
