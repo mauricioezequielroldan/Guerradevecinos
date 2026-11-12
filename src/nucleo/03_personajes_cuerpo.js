@@ -58,7 +58,7 @@ let TWO_P = false;
 let player2 = null;
 let lastSayT = -9, slowMo = 0, lastKO = null;
 // v8: aguante. Con 1 los rounds de 4vs4 duraban ~22 s y la policía nunca llegaba.
-const HP_SCALE = +(params.get('aguante') || 5.5);
+const HP_SCALE = +(params.get('aguante') || 3.2);   // v56: antes 5.5 (las peleas se hacían eternas)
 const ATK = {
   jab: { dur: 0.3, hitAt: 0.11, range: 1.55, arc: 1.05, dmg: 6, kb: 2.5, stun: 0.3 },
   cross: { dur: 0.34, hitAt: 0.13, range: 1.6, arc: 1.05, dmg: 7, kb: 3, stun: 0.33 },
