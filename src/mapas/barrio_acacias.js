@@ -20,7 +20,7 @@ function baTileTex(c1, c2) { return canvasTex(64, 64, (g, w, h) => { for (let y 
 // ---------- fachada genérica (local: la fachada mira a +z, en z = 0; el edificio va hacia -z) ----------
 function baFacade(sc, x, z, rotY, w, h, o) {
   o = o || {};
-  let g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; sc.add(g);
+  let g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = rotY; sc.add(g); g.userData.estatico = true;   // las fachadas no se mueven
   const color = o.color !== undefined ? o.color : pick([0xd83a2a, 0x2a6ad0, 0xe8c030, 0x2a9a5a, 0xe87a2a, 0x7a3a9a, 0x4ab8d8, 0xe85a8a, 0xf0e8d0, 0x3ac0a0, 0xc8b8a0]);
   const chapa = o.chapa !== undefined ? o.chapa : Math.random() < 0.5;
   const brick = !chapa && !o.shop && (o.brick !== undefined ? o.brick : Math.random() < 0.3);

@@ -167,7 +167,7 @@ function buildBarrio() {
     const F = BA.fire; if (F) { F.l.intensity = 1.9 + Math.sin(BA.t * 13) * 0.25 + Math.sin(BA.t * 7.3) * 0.2 + (Math.random() - 0.5) * 0.25; F.flames.forEach((f, i) => { f.scale.set(1, 0.8 + Math.abs(Math.sin(BA.t * (6 + i) + i)) * 0.5, 1); f.rotation.y = BA.t * (1 + i * 0.3); });
       F.embers.forEach(e => { const u = (BA.t * 0.45 + e.userData.ph) % 1; e.position.set(F.x + Math.sin(e.userData.ph * 40 + u * 3) * 0.3, 1.1 + u * 2.4, F.z + Math.cos(e.userData.ph * 30 + u * 2) * 0.3); e.material.color.setHex(u > 0.7 ? 0x8a3010 : 0xffa040); }); }
     for (const b of BA.fisuras) { b.curSpeed = 0; b.root.position.copy(b.pos); b.root.rotation.y = b.facing; b.animate(dt); }
-    if (P && BA.fisuras.length && Math.hypot(P.pos.x - BA.fireSpot.x, P.pos.z - BA.fireSpot.z) < 3.5 && BA.t - (BA.fisT || -99) > 9) { BA.fisT = BA.t; popText(new THREE.Vector3(BA.fireSpot.x, 2.3, BA.fireSpot.z), pick(['¿Tenés un cigarrillo, Rubén?', 'Hace un frío que pela, eh.', 'Dicen que el del pancho anda por el Trofi...', '¿Volvió la luz en el centro?']), 'warn', 2.4); }
+    if (P && !HIST.cine && BA.fisuras.length && Math.hypot(P.pos.x - BA.fireSpot.x, P.pos.z - BA.fireSpot.z) < 3.5 && BA.t - (BA.fisT || -99) > 9) { BA.fisT = BA.t; popText(new THREE.Vector3(BA.fireSpot.x, 2.3, BA.fireSpot.z), pick(['¿Tenés un cigarrillo, Rubén?', 'Hace un frío que pela, eh.', 'Dicen que el del pancho anda por el Trofi...', '¿Volvió la luz en el centro?']), 'warn', 2.4); }
     // pibes haciendo willy: van y vienen, levantan la rueda de adelante
     for (const k of BA.kids) {
       let pos = k.axis === 'x' ? k.x : k.z; pos += k.dir * k.v * dt; if (pos > k.max || pos < k.min) { k.dir *= -1; pos = clamp(pos, k.min, k.max); }

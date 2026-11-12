@@ -146,7 +146,7 @@ function mvBlocked(x, z, self) {
     // quietos (grupos, parada, plaza, playero, cuidacoches, La Romi)
     for (const b of MV.still) { b.curSpeed = 0; if (vis(b)) { b.root.position.copy(b.pos); b.root.rotation.y = b.facing; b.animate(dt); } }
     // La Romi saluda y te tira chismes del misterio cuando pasás
-    if (MV.romi && P) { MV.romiWave = (MV.romiWave || 0) - dt; const d = Math.hypot(P.pos.x - MV.romi.pos.x, P.pos.z - MV.romi.pos.z);
+    if (MV.romi && P && !HIST.cine) { MV.romiWave = (MV.romiWave || 0) - dt; const d = Math.hypot(P.pos.x - MV.romi.pos.x, P.pos.z - MV.romi.pos.z);
       if (d < 4 && MV.t - MV.romiT > 10) { MV.romiT = MV.t; MV.romiWave = 2.5; popText(new THREE.Vector3(MV.romi.pos.x, 2.3, MV.romi.pos.z), pick(['¡Rubén, divino! ¿Vos también sin luz?', 'El del pancho pasó en un auto gris hace un rato, eh.', 'Me pinté con la linterna del celu, ¿cómo quedé?', 'Cuidate, que esta noche el barrio está bravo.', 'Dicen que el del pancho le debe plata al Trofi...']), 'warn', 2.8); } }
     // pibes del potrero: corren a la pelota y la patean
     const bl = MV.ball;
