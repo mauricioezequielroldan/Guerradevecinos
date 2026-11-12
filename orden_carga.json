@@ -19,6 +19,7 @@
   "src/mapas/trofi_publico.js",
   "src/personajes/cuerpos_nuevos.js",
   "src/personajes/descanso.js",
+  "src/combate/pelea.js",
   "src/mapas/calle_barrio.js",
   "src/mapas/calle_vida.js",
   "src/mapas/modelos_hd.js",
