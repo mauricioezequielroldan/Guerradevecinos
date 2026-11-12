@@ -81,11 +81,16 @@ function histDialog(lines, choice, onEnd) {
     const [who, text] = lines[i]; const n = el.querySelector('.n'); n.textContent = who.toUpperCase(); n.className = 'n' + (who === 'Rubén' ? ' r' : '');
     el.querySelector('.x').textContent = text; ch.innerHTML = ''; hint.style.display = '';
     if (i === lines.length - 1 && choice) {
-      hint.style.display = 'none';
+      // v55: también con teclado (antes sólo con el mouse y la charla quedaba trabada): ENTER / E = la primera opción, ESC = la segunda
+      hint.style.display = ''; hint.textContent = `ENTER / E: ${choice[0][0]}${choice[1] ? '  ·  ESC: ' + choice[1][0] : ''}`;
       for (const [label, fn] of choice) { const b = document.createElement('button'); b.textContent = label; b.onclick = () => { histCloseTalk(); fn(); }; ch.appendChild(b); }
-    }
+    } else hint.textContent = 'ENTER / E: seguir';
   };
-  HIST.talk = { next: () => { if (i === lines.length - 1) { if (choice) return; histCloseTalk(); if (onEnd) onEnd(); return; } i++; show(); }, choice };
+  HIST.talk = {
+    next: () => { if (i === lines.length - 1) { if (choice) { histCloseTalk(); choice[0][1](); return; } histCloseTalk(); if (onEnd) onEnd(); return; } i++; show(); },
+    cancel: () => { if (i === lines.length - 1 && choice && choice[1]) { histCloseTalk(); choice[1][1](); } },
+    choice
+  };
   show();
 }
 function histCloseTalk() { HIST.ui.talk.classList.add('hidden'); HIST.talk = null; }
@@ -167,7 +172,7 @@ function histLaunch(m) {
   step = function (rdt, render) {
     // prólogo y diálogos: Enter / E avanzan, Esc salta el prólogo
     if (HIST.proStep) { if (PR('Enter') || PR('Space')) HIST.proStep(false); else if (PR('Escape')) HIST.proStep(true); for (const k in pressed) delete pressed[k]; if (render !== false) renderFrame(rdt); return; }
-    if (HIST.talk) { if (!HIST.talk.choice || true) { if (PR('Enter') || PR('KeyE') || PR('Space')) HIST.talk.next(); } for (const k in pressed) delete pressed[k]; if (render !== false) renderFrame(rdt); return; }
+    if (HIST.talk) { if (PR('Enter') || PR('KeyE') || PR('Space')) HIST.talk.next(); else if (PR('Escape') && HIST.talk.cancel) HIST.talk.cancel(); for (const k in pressed) delete pressed[k]; if (render !== false) renderFrame(rdt); return; }
     baseStep(rdt, render);
     if (gameState !== 'historia' || !HIST.on) { for (const mk of HIST.marks) mk.label.style.display = 'none'; return; }   // los carteles del barrio nunca fuera del barrio
     const P = player; if (!P) return;

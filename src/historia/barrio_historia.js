@@ -10,7 +10,7 @@ HIST.goal = null;
   histLaunch = function (m) {
     if (m.lugar && !(HIST.goal && HIST.goal.go)) {   // primero hay que ir hasta el lugar
       HIST.goal = { m, x: m.lugar[0], z: m.lugar[1], r: m.lugar[2], text: m.lugar[3], remis: !!m.remis, go: false, t: 0 };
-      histObjective(); return;
+      histObjective(); banner('OBJETIVO', m.lugar[3] + ' · seguí la flecha', 'round'); return;   // que quede claro adónde ir
     }
     HIST.goal = null; return baseLaunch(m);
   };
