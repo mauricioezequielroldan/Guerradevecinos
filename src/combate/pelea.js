@@ -33,6 +33,11 @@ const PELEA = { tragos: [], spawnT: 18, t: 0 };
       if (this._mareo > 0) { const s = Math.sin(PELEA.t * 2.1 + this.idx) * 0.9 * dt; this.pos.x += s; this.pos.z += Math.cos(PELEA.t * 1.7) * 0.5 * dt; }
     }
     if (this._mareo > 0) this._mareo -= dt;
+    if (this._trago && this._trago.mesh) {   // el vaso sigue a la mano, parado, y se inclina hacia la boca al tomar
+      const m = this._trago.mesh, h = (this.hand || this.root).getWorldPosition(new THREE.Vector3());
+      m.position.set(h.x + Math.sin(this.facing) * 0.04, h.y - 0.1, h.z + Math.cos(this.facing) * 0.04);
+      m.quaternion.setFromEuler(new THREE.Euler(-Math.min(0.9, this._trago.t * 1.4), this.facing, 0, 'YXZ'));
+    }
     // tomando: se cura de a poco, y si le pegan se le cae
     if (this._trago) { const T = this._trago; T.t += dt; if (this.state !== 'normal' && this.state !== 'attack') { tragoSacar(this); this._trago = null; popText(this.pos.clone().setY(2.3), '¡Se le cayó!', 'warn', 1.2); }
       else if (T.t >= 1.0) { const cur = Math.round(this.maxHp * T.def.heal); this.hp = Math.min(this.maxHp, this.hp + cur); if (T.def.mareo) this._mareo = T.def.mareo; popText(this.pos.clone().setY(2.4), '+' + T.def.nombre.toUpperCase(), 'big', 1.4); tragoSacar(this); this._trago = null; } }
@@ -149,8 +154,7 @@ function tragoMesh(tipo) {
 // el vaso (o el cartón) en la mano mientras toma
 function tragoEnMano(tipo, f) {
   const m = tragoMesh(tipo); m.children.slice().forEach(c => { if (c.isSprite || (c.geometry && c.geometry.type === 'RingGeometry')) m.remove(c); });
-  m.scale.setScalar(0.7); m.position.set(0, -0.04, 0.05); m.rotation.x = -0.4;
-  (f.hand || f.root).add(m); return m;
+  m.scale.setScalar(0.62); scene.add(m); return m;   // en el mundo (no colgado de la mano: heredaba su escala y su giro)
 }
 function tragoSacar(f) { const T = f._trago; if (T && T.mesh && T.mesh.parent) T.mesh.parent.remove(T.mesh); }
 function tragoSpawn() {
@@ -165,7 +169,8 @@ function tragoLimpiar() { for (const t of PELEA.tragos) if (t.m.parent) t.m.pare
   Fighter.prototype.doGrab = function () {
     if (this.canAct() && !this._trago) {
       let best = null, bd = 1.6; for (const t of PELEA.tragos) { const d = Math.hypot(t.x - this.pos.x, t.z - this.pos.z); if (d < bd) { bd = d; best = t; } }
-      if (best) { PELEA.tragos.splice(PELEA.tragos.indexOf(best), 1); if (best.m.parent) best.m.parent.remove(best.m); this._trago = { def: best.def, t: 0, mesh: tragoEnMano(best.tipo, this) }; sfx('pickup'); this.say && this.say(best.tipo === 'fernet' ? '¡Un Fernandito!' : '¡Salud!', 1.2); return; }
+      if (best) { PELEA.tragos.splice(PELEA.tragos.indexOf(best), 1); if (best.m.parent) best.m.parent.remove(best.m); this._trago = { def: best.def, t: 0, mesh: tragoEnMano(best.tipo, this) }; sfx('pickup');
+        popText(this.pos.clone().setY(2.35), pick(best.tipo === 'fernet' ? ['¡Uhh, un fernecito!', 'Con coca, como Dios manda', '¡Fernandito, mi amor!', 'Esto me levanta un muerto'] : ['¡Salud, muchachos!', 'Un vinito en cartón...', 'Mmm, cosecha 2024', '¡Este es de los buenos!']), 'warn', 1.6); return; }
     }
     return baseGrab.call(this);
   };
